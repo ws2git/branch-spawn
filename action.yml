@@ -1,0 +1,25 @@
+name: 'Branch Spawn'
+description: 'Creates a new branch in a specified repository from a base branch.'
+author: 'rmottanet'
+branding:
+  icon: 'git-branch'
+  color: 'orange'
+inputs:
+  owner:
+    description: 'The owner (user or organization) of the repository.'
+    required: true
+  repo:
+    description: 'The name of the repository.'
+    required: true
+  base-branch:
+    description: 'The existing branch name to create the new branch from.'
+    required: true
+  new-branch:
+    description: 'The name of the new branch to be created.'
+    required: true
+  github-token:
+    description: 'The GitHub Token with permissions to create branches.'
+    required: true
+runs:
+  using: 'node20'
+  main: 'dist/index.js' 
