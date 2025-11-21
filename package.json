@@ -1,0 +1,27 @@
+{
+  "name": "Branch Spawn",
+  "version": "1.0.0",
+  "description": "Branch Spawn is a GitHub Action that automatically creates new branches with precision, boosting workflow automation and improving repo organization.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build src/index.ts -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ws2git/branch-spawn.git"
+  },
+  "keywords": [],
+  "author": "rmottanet",
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@vercel/ncc": "^0.38.4",
+    "typescript": "^5.9.3"
+  }
+}
