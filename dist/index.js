@@ -29963,17 +29963,18 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(7484));
 const github = __importStar(__nccwpck_require__(3228));
+/**
+ * Main asynchronous function.
+ * @returns {Promise<void>}
+ */
 async function run() {
     try {
-        // 1. Obter os inputs
-        const owner = core.getInput('owner', { required: true });
-        const repo = core.getInput('repo', { required: true });
-        const baseBranch = core.getInput('base-branch', { required: true });
-        const newBranch = core.getInput('new-branch', { required: true });
-        const githubToken = core.getInput('github-token', { required: true });
-        // 2. Inicializar o cliente Octokit (para interagir com a API do GitHub)
+        const githubToken = core.getInput('github-token', { required: true }).trim();
+        const owner = core.getInput('owner', { required: true }).trim();
+        const repo = core.getInput('repo', { required: true }).trim();
+        const baseBranch = core.getInput('base-branch', { required: true }).trim();
+        const newBranch = core.getInput('new-branch', { required: true }).trim();
         const octokit = github.getOctokit(githubToken);
-        // 3. Obter o SHA do commit da base-branch
         core.info(`-> Trying to get the SHA for the base branch: ${baseBranch}`);
         const { data: baseBranchData } = await octokit.rest.git.getRef({
             owner,
@@ -29982,7 +29983,6 @@ async function run() {
         });
         const sha = baseBranchData.object.sha;
         core.info(`<- SHA of the base branch (${baseBranch}) successfully obtained: ${sha}`);
-        // 4. Criar a nova branch (referência)
         core.info(`-> Creating the new branch: ${newBranch} with SHA: ${sha}`);
         await octokit.rest.git.createRef({
             owner,
@@ -29990,18 +29990,19 @@ async function run() {
             ref: `refs/heads/${newBranch}`, // 'refs/heads/' é necessário para criar novas branches
             sha: sha,
         });
-        // 5. Sucesso
         core.setOutput('success-message', `Branch '${newBranch}' created successfully in the repository '${owner}/${repo}' from '${baseBranch}'.`);
         core.info('Operation completed successfully!');
     }
     catch (error) {
-        // 6. Falha
-        core.setFailed(error.message);
-        core.error(`Failed to create branch: ${error.message}`);
+        if (error instanceof Error) {
+            core.setFailed(`Action failed due to error: ${error.message}`);
+        }
+        else {
+            core.setFailed('Action failed with an unknown error.');
+        }
     }
 }
-// Executar a função principal
-run();
+void run();
 
 
 /***/ }),
