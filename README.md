@@ -36,7 +36,7 @@ jobs:
       contents: write # Required for creating branches/references
     steps:
       - name: Create 'release/v1.2.0' branch from 'main'
-        uses: ws2git/branch-spawn@v1
+        uses: ws2git/branch-spawn@v2
         with:
           # **ADJUST INPUTS HERE**
           owner: ${{ github.repository_owner }} # Or a specific organization/user name
